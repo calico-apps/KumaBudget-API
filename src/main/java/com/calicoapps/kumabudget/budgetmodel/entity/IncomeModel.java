@@ -1,8 +1,6 @@
-package com.calicoapps.kumabudget.budget.entity;
+package com.calicoapps.kumabudget.budgetmodel.entity;
 
-import com.calicoapps.kumabudget.budgetmodel.entity.IncomeModel;
 import com.calicoapps.kumabudget.common.Constants;
-import com.calicoapps.kumabudget.common.JsonUtil;
 import com.calicoapps.kumabudget.family.entity.Person;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
@@ -20,39 +18,33 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "budget_incomes")
+@Table(name = "model_incomes")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Income {
+public class IncomeModel {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
-    private Double amount;
+    private String label;
 
     @ManyToOne
     @JoinColumn(nullable = false)
     private Person person;
 
     @Column(nullable = false)
+    private Double amount;
+
+    @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATE_FORMAT)
-    private LocalDate date;
+    private LocalDate startDate;
 
-    @ManyToOne
-    private IncomeModel model;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATE_FORMAT)
+    private LocalDate endDate;
 
-    @Override
-    public String toString() {
-        return JsonUtil.toJson(this);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        return this.toString().equals(o.toString());
-    }
+    private Integer factor;
 
 }

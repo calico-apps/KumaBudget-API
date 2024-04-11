@@ -1,7 +1,7 @@
 package com.calicoapps.kumabudget.security.service.login;
 
-import com.calicoapps.kumabudget.security.data.token.Token;
-import com.calicoapps.kumabudget.security.data.token.TokenRepository;
+import com.calicoapps.kumabudget.security.entity.Token;
+import com.calicoapps.kumabudget.security.repository.TokenRepository;
 import com.calicoapps.kumabudget.security.util.AuthUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -33,7 +33,7 @@ public class LogoutService implements LogoutHandler {
         }
 
         String token = tokenOpt.get();
-        Token storedToken = tokenRepository.findByToken(token)
+        Token storedToken = tokenRepository.findById(token)
                 .orElse(null);
         if (storedToken != null) {
             storedToken.setExpired(true);
