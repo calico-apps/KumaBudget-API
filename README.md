@@ -34,6 +34,8 @@ mvn spring-boot:run -DskipTests
 ```
 
 ### Deploy in Prod
-1. Push on `main` branch on Github, this is automated 🙂
+1. always make sure the database tables are updated with the last changes because a validation is made at deployment
+2. java version can't be higher than 20
+3. push on `main` branch on Github, rest is automated 🙂
 - the `system.properties` file is mandatory for Koyeb
 - the environment variables and secrets are set in Koyeb
