@@ -21,6 +21,11 @@ public class KumaBudgetApplication implements CommandLineRunner {
 
         try {
             Dotenv dotenv = Dotenv.load();
+            System.setProperty("SPRING_PROFILES_ACTIVE"
+                    , dotenv.get("SPRING_PROFILES_ACTIVE"));
+            System.setProperty("PORT"
+                    , dotenv.get("PORT"));
+
             System.setProperty("POSTGRES_HOST"
                     , dotenv.get("POSTGRES_HOST"));
             System.setProperty("POSTGRES_DB"
