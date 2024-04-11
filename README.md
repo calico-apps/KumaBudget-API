@@ -8,7 +8,7 @@ PORT=8000
 
 POSTGRES_HOST=your-db-host
 POSTGRES_DB=your-db-name
-POSTGRES_USER=your-db-authUser
+POSTGRES_USER=your-db-credentials
 POSTGRES_PASSWORD=your-db-password
 DDL_AUTO=update
 

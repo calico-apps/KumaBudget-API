@@ -1,7 +1,7 @@
 package com.calicoapps.kumabudget.security.config;
 
-import com.calicoapps.kumabudget.security.api.filter.JwtAuthenticationFilter;
-import com.calicoapps.kumabudget.util.Constants;
+import com.calicoapps.kumabudget.common.Constants;
+import com.calicoapps.kumabudget.security.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

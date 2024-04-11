@@ -1,28 +1,26 @@
 package com.calicoapps.kumabudget.security.service.user;
 
-import com.calicoapps.kumabudget.security.data.user.AuthUser;
-import com.calicoapps.kumabudget.security.data.user.AuthUserRepository;
-import com.calicoapps.kumabudget.error.KumaException;
-import lombok.RequiredArgsConstructor;
+import com.calicoapps.kumabudget.common.DataService;
+import com.calicoapps.kumabudget.security.entity.Credentials;
+import com.calicoapps.kumabudget.security.repository.CredentialsRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
-@RequiredArgsConstructor
-public class UserService {
+public class UserService extends DataService<Credentials, String> {
 
-    public static final String ENTITY_NAME = "AuthUser";
+    public static final String ENTITY_NAME = "Credentials";
 
-    private final AuthUserRepository authUserRepository;
+    private final CredentialsRepository repository;
 
-    public AuthUser findUserByEmail(String email) {
-        Optional<AuthUser> userOptional = authUserRepository.findById(email);
-        return KumaException.orElseThrow(userOptional, ENTITY_NAME, email);
+    public UserService(CredentialsRepository repository) {
+        super(ENTITY_NAME);
+        this.repository = repository;
     }
 
-    public Optional<AuthUser> findOptionalUserByEmail(String email) {
-        return authUserRepository.findById(email);
+    @Override
+    protected JpaRepository<Credentials, String> getRepository() {
+        return repository;
     }
 
 }

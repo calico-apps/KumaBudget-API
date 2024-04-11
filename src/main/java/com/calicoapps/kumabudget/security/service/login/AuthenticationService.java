@@ -1,15 +1,15 @@
 package com.calicoapps.kumabudget.security.service.login;
 
-import com.calicoapps.kumabudget.security.api.request.LoginRequest;
-import com.calicoapps.kumabudget.security.api.response.TokenResponse;
-import com.calicoapps.kumabudget.security.data.token.Token;
-import com.calicoapps.kumabudget.security.data.token.TokenRepository;
-import com.calicoapps.kumabudget.security.data.user.AuthUser;
-import com.calicoapps.kumabudget.security.data.user.AuthUserRepository;
+import com.calicoapps.kumabudget.exception.ErrorCode;
+import com.calicoapps.kumabudget.exception.KumaException;
+import com.calicoapps.kumabudget.security.dto.LoginRequest;
+import com.calicoapps.kumabudget.security.dto.TokenResponse;
+import com.calicoapps.kumabudget.security.entity.Credentials;
+import com.calicoapps.kumabudget.security.entity.Token;
+import com.calicoapps.kumabudget.security.repository.CredentialsRepository;
+import com.calicoapps.kumabudget.security.repository.TokenRepository;
 import com.calicoapps.kumabudget.security.service.token.JwtService;
 import com.calicoapps.kumabudget.security.service.user.UserService;
-import com.calicoapps.kumabudget.error.ErrorCode;
-import com.calicoapps.kumabudget.error.KumaException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final AuthUserRepository authUserRepository;
+    private final CredentialsRepository credentialsRepository;
     private final UserService userService;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
@@ -35,19 +35,19 @@ public class AuthenticationService {
     public TokenResponse generateTokenForNewRegisteredUser(LoginRequest request) {
 
         // 1. Create new user in DB with encoded password
-        AuthUser newAuthUser = new AuthUser();
-        newAuthUser.setEmail(request.getEmail());
-        newAuthUser.setPassword(encodeSeasonedPassword(request.getPassword()));
-        newAuthUser = authUserRepository.save(newAuthUser);
+        Credentials newCredentials = new Credentials();
+        newCredentials.setEmail(request.getEmail());
+        newCredentials.setPassword(encodeSeasonedPassword(request.getPassword()));
+        newCredentials = credentialsRepository.save(newCredentials);
 
         // 2. Create token
-        String token = JwtService.generateToken(newAuthUser);
-        String refreshToken = JwtService.generateRefreshToken(newAuthUser);
-        saveUserToken(newAuthUser, token);
+        String token = JwtService.generateToken(newCredentials);
+        String refreshToken = JwtService.generateRefreshToken(newCredentials);
+        saveUserToken(newCredentials, token);
 
         // 3. Return the token
         return TokenResponse.builder()
-                .userEmail(newAuthUser.getEmail())
+                .userEmail(newCredentials.getEmail())
                 .accessToken(token)
                 .refreshToken(refreshToken)
                 .build();
@@ -65,27 +65,27 @@ public class AuthenticationService {
         );
 
         // 2. Generate new tokens
-        AuthUser authUser = userService.findUserByEmail(email);
-        String token = JwtService.generateToken(authUser);
-        String refreshToken = JwtService.generateRefreshToken(authUser);
+        Credentials credentials = userService.findById(email);
+        String token = JwtService.generateToken(credentials);
+        String refreshToken = JwtService.generateRefreshToken(credentials);
 
         // 3. Invalidate old valid tokens of the user
-        revokeAllUserTokens(authUser);
+        revokeAllUserTokens(credentials);
 
         // 4. Save new generated valid token
-        saveUserToken(authUser, token);
+        saveUserToken(credentials, token);
 
         // 5. Return tokens
         return TokenResponse.builder()
-                .userEmail(authUser.getEmail())
+                .userEmail(credentials.getEmail())
                 .accessToken(token)
                 .refreshToken(refreshToken)
                 .build();
     }
 
-    private void saveUserToken(AuthUser authUser, String jwtToken) {
+    private void saveUserToken(Credentials credentials, String jwtToken) {
         Token token = Token.builder()
-                .authUser(authUser)
+                .credentials(credentials)
                 .token(jwtToken)
                 .expired(false)
                 .revoked(false)
@@ -93,8 +93,8 @@ public class AuthenticationService {
         tokenRepository.save(token);
     }
 
-    private void revokeAllUserTokens(AuthUser authUser) {
-        List<Token> validUserTokens = tokenRepository.findAllValidTokenByUser(authUser.getEmail());
+    private void revokeAllUserTokens(Credentials credentials) {
+        List<Token> validUserTokens = tokenRepository.findAllValidTokenByUser(credentials.getEmail());
         if (validUserTokens.isEmpty())
             return;
         validUserTokens.forEach(token -> {
@@ -135,16 +135,16 @@ public class AuthenticationService {
             throw new KumaException(ErrorCode.UNAUTHORIZED);
         }
 
-        AuthUser authUser = userService.findUserByEmail(userEmail);
+        Credentials credentials = userService.findById(userEmail);
 
-        if (JwtService.isTokenValid(refreshToken, authUser)) {
-            String accessToken = JwtService.generateToken(authUser);
+        if (JwtService.isTokenValid(refreshToken, credentials)) {
+            String accessToken = JwtService.generateToken(credentials);
 
-            revokeAllUserTokens(authUser);
-            saveUserToken(authUser, accessToken);
+            revokeAllUserTokens(credentials);
+            saveUserToken(credentials, accessToken);
 
             return TokenResponse.builder()
-                    .userEmail(authUser.getEmail())
+                    .userEmail(credentials.getEmail())
                     .accessToken(accessToken)
                     .refreshToken(refreshToken)
                     .build();

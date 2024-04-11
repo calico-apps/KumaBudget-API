@@ -21,7 +21,7 @@ public class SecurityBeansConfiguration {
 
     @Bean // Retrieve user (= UserDetails) informations
     public UserDetailsService userDetailsService() {
-        return email -> userService.findUserByEmail(email);
+        return email -> userService.findById(email);
     }
 
     @Bean // Manage authentications

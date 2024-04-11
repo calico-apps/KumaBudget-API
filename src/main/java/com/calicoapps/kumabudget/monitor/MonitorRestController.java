@@ -12,9 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/")
 public class MonitorRestController {
 
-    @GetMapping("isAlive")
+    @GetMapping()
     public ResponseEntity<String> helloWorld() {
         return new ResponseEntity<>("Hello World :)" , HttpStatus.OK);
+    }
+
+    @GetMapping("isAlive")
+    public ResponseEntity<String> isAlive() {
+        return new ResponseEntity<>("Yes I'm alive !" , HttpStatus.OK);
     }
 
     @GetMapping("testSecurity")
