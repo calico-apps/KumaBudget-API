@@ -1,5 +1,6 @@
-package com.calicoapps.kumabudget.expense.entity;
+package com.calicoapps.kumabudget.budget.entity;
 
+import com.calicoapps.kumabudget.util.JsonUtil;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
@@ -15,12 +16,12 @@ import lombok.Setter;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "expenses")
+@Table(name = "incomes")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "expense_type" , discriminatorType = DiscriminatorType.STRING)
 @Getter
 @Setter
-public abstract class Expense {
+public abstract class Income {
 
     @Id
     @GeneratedValue
@@ -28,5 +29,15 @@ public abstract class Expense {
 
     @Column(nullable = false)
     private BigDecimal amount;
+
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return this.toString().equals(o.toString());
+    }
 
 }

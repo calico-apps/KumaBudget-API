@@ -7,6 +7,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "families")
+@Getter
 @Setter
 @Builder
 @NoArgsConstructor
@@ -25,6 +27,6 @@ public class Family {
     private Long id;
 
     @OneToMany(mappedBy = "family")
-    private List<FamilyMember> familyMembers;
+    private List<Person> people;
 
 }

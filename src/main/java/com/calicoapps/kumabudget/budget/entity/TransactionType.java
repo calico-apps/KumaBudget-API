@@ -1,6 +1,6 @@
-package com.calicoapps.kumabudget.expense.entity;
+package com.calicoapps.kumabudget.budget.entity;
 
-public class ExpenseType {
+public class TransactionType {
 
     public static final String FAMILY = "FAMILY";
     public static final String FAMILY_RECURRENT = "FAMILY_RECURRENT";

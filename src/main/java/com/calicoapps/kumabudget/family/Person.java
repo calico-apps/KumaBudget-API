@@ -9,16 +9,18 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "family_members")
+@Table(name = "persons")
+@Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FamilyMember {
+public class Person {
 
     @Id
     @GeneratedValue
