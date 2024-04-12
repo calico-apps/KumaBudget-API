@@ -38,10 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             Optional<String> tokenOpt = AuthUtil.getValidTokenFromRequestHeaders(request);
 
-            if (tokenOpt.isEmpty()) {
-                // The check if the endpoint is allowed to be unprotected is done after the doFilter
-                filterChain.doFilter(request, response);
-            } else {
+            if (!tokenOpt.isEmpty()) {
                 String token = tokenOpt.get();
 
                 String userEmail = jwtService.extractUsername(token);
@@ -55,11 +52,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
 
+            filterChain.doFilter(request, response);
+
         } catch (JwtException ex) {
             throw new KumaException(ErrorCode.UNAUTHORIZED_TOKEN);
         }
 
-        filterChain.doFilter(request, response);
     }
 
 }

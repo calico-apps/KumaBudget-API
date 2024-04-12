@@ -6,6 +6,7 @@ import com.calicoapps.kumabudget.security.dto.LoginRequest;
 import com.calicoapps.kumabudget.security.dto.RefreshTokenRequest;
 import com.calicoapps.kumabudget.security.dto.TokenResponse;
 import com.calicoapps.kumabudget.security.service.login.AuthenticationService;
+import com.calicoapps.kumabudget.security.service.user.CredentialsService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthRestController {
 
     private final AuthenticationService authenticationService;
+    private final CredentialsService credentialsService;
 
     // /api/auth/logout also exists in SecurityConfiguration
 
@@ -35,14 +37,15 @@ public class AuthRestController {
     }
 
 //    // To move later
-//    @PostMapping("/register")
-//    public ResponseEntity<TokenResponse> registerNewUser(
-//            @RequestBody LoginRequest loginRequest,
-//            HttpServletRequest request
-//    ) {
-//        log.debug(LoggingHelper.buildRequestIdLogLine(request.getMethod(), request.getRequestURI(), loginRequest.getEmail()));
-//        return ResponseEntity.ok(authenticationService.generateTokenForNewRegisteredUser(loginRequest));
-//    }
+    @PostMapping("/register")
+    public ResponseEntity registerNewUser(
+            @RequestBody LoginRequest loginRequest,
+            HttpServletRequest request
+    ) {
+        log.debug(LoggingHelper.buildRequestIdLogLine(request.getMethod(), request.getRequestURI(), loginRequest.getEmail()));
+        credentialsService.create(loginRequest.getEmail(), loginRequest.getPassword());
+        return ResponseEntity.ok().build();
+    }
 
     // Get a fresh new token without logging in again
     @PostMapping("/token/refresh")

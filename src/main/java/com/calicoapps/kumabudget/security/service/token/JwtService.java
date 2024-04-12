@@ -59,13 +59,13 @@ public class JwtService {
 
     // ==== TOKEN GENERATION =====================
 
-    public String generateToken(Credentials credentials) {
+    public String generateAndSaveToken(Credentials credentials) {
         String token = buildToken(credentials, tokenExpiration);
         saveTokenInDB(credentials, token, false);
         return token;
     }
 
-    public String generateRefreshToken(Credentials credentials) {
+    public String generateAndSaveRefreshToken(Credentials credentials) {
         String refreshToken = buildToken(credentials, refreshTokenExpiration);
         saveTokenInDB(credentials, refreshToken, true);
         return refreshToken;
@@ -95,7 +95,7 @@ public class JwtService {
                 .expired(false)
                 .revoked(false)
                 .build();
-        tokenRepository.save(token);
+        token = tokenRepository.save(token);
     }
 
     private Key getSignInKey() {

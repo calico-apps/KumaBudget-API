@@ -36,13 +36,14 @@ public class AuthenticationService {
             throw new KumaException(ErrorCode.UNAUTHORIZED_CREDENTIALS);
         }
 
-        // 2. Generate fresh tokens
         Credentials credentials = credentialsService.findById(email);
-        String token = jwtService.generateToken(credentials);
-        String refreshToken = jwtService.generateRefreshToken(credentials);
 
         // 3. Invalidate old valid tokens of the user
         revokeAllUserTokens(credentials);
+
+        // 2. Generate fresh tokens
+        String token = jwtService.generateAndSaveToken(credentials);
+        String refreshToken = jwtService.generateAndSaveRefreshToken(credentials);
 
         // 4. Return tokens
         return TokenResponse.builder()
@@ -54,6 +55,21 @@ public class AuthenticationService {
 
     private void revokeAllUserTokens(Credentials credentials) {
         List<Token> validUserTokens = tokenRepository.findAllValidTokenByUser(credentials.getEmail());
+        if (validUserTokens.isEmpty())
+            return;
+        validUserTokens.forEach(token -> {
+            token.setExpired(true);
+            token.setRevoked(true);
+        });
+        tokenRepository.saveAll(validUserTokens);
+    }
+
+    private void revokeAllShortTokens(Credentials credentials) {
+        List<Token> validUserTokens =
+                tokenRepository.findAllValidTokenByUser(credentials.getEmail())
+                        .stream()
+                        .filter(tk -> !tk.isRefresh())
+                        .toList();
         if (validUserTokens.isEmpty())
             return;
         validUserTokens.forEach(token -> {
@@ -80,9 +96,12 @@ public class AuthenticationService {
         Credentials credentials = credentialsService.findById(userEmail);
 
         if (jwtService.isRefreshTokenValidInDB(refreshToken)) {
-            String accessToken = jwtService.generateToken(credentials);
 
-            revokeAllUserTokens(credentials);
+            // We revoke the old short tokens
+            revokeAllShortTokens(credentials);
+
+            // And we generate a fresh new one
+            String accessToken = jwtService.generateAndSaveToken(credentials);
 
             return TokenResponse.builder()
                     .userEmail(credentials.getEmail())

@@ -28,9 +28,13 @@ public class CredentialsService extends DataService<Credentials, String> {
     }
 
     public Credentials create(String email, String password) {
+
+        // todo: check if not existing before
+
         Credentials credentials = new Credentials();
         credentials.setEmail(email);
         credentials.setPassword(encodeSeasonedPassword(password));
+        credentials.setActive(true);
         return repository.save(credentials);
     }
 
