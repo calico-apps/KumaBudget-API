@@ -1,4 +1,4 @@
-package com.calicoapps.kumabudget.common;
+package com.calicoapps.kumabudget.common.util;
 
 import com.calicoapps.kumabudget.exception.ErrorCode;
 import com.calicoapps.kumabudget.exception.KumaException;

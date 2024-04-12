@@ -1,6 +1,6 @@
 package com.calicoapps.kumabudget.budgetmodel.entity;
 
-import com.calicoapps.kumabudget.common.JsonUtil;
+import com.calicoapps.kumabudget.common.util.JsonUtil;
 import com.calicoapps.kumabudget.family.entity.Person;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "model_payers")
+@Table(name = "model_participations")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExpensePayerModel {
+public class ParticipationModel {
 
     @Id
     @GeneratedValue
@@ -28,7 +28,7 @@ public class ExpensePayerModel {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private ExpenseModel expense;
+    private TransactionModel transaction;
 
     @ManyToOne
     @JoinColumn(nullable = false)

@@ -1,6 +1,7 @@
 package com.calicoapps.kumabudget.security.api;
 
 import com.calicoapps.kumabudget.common.Constants;
+import com.calicoapps.kumabudget.monitor.LoggingHelper;
 import com.calicoapps.kumabudget.security.dto.LoginRequest;
 import com.calicoapps.kumabudget.security.dto.RefreshTokenRequest;
 import com.calicoapps.kumabudget.security.dto.TokenResponse;
@@ -29,18 +30,18 @@ public class AuthRestController {
             @RequestBody LoginRequest loginRequest,
             HttpServletRequest request
     ) {
-        log.debug("[REQUEST] {} {} email:" , request.getMethod(), request.getRequestURI(), loginRequest.getEmail());
+        log.debug(LoggingHelper.buildRequestIdLogLine(request.getMethod(), request.getRequestURI(), loginRequest.getEmail()));
         return ResponseEntity.ok(authenticationService.getToken(loginRequest.getEmail(), loginRequest.getPassword()));
     }
 
     // To move later
     @PostMapping("/register")
     public ResponseEntity<TokenResponse> registerNewUser(
-            @RequestBody LoginRequest LoginRequest,
+            @RequestBody LoginRequest loginRequest,
             HttpServletRequest request
     ) {
-        log.debug("[REQUEST] {} {} email:" , request.getMethod(), request.getRequestURI(), LoginRequest.getEmail());
-        return ResponseEntity.ok(authenticationService.generateTokenForNewRegisteredUser(LoginRequest));
+        log.debug(LoggingHelper.buildRequestIdLogLine(request.getMethod(), request.getRequestURI(), loginRequest.getEmail()));
+        return ResponseEntity.ok(authenticationService.generateTokenForNewRegisteredUser(loginRequest));
     }
 
     // Get a fresh new token without logging in again
@@ -49,6 +50,7 @@ public class AuthRestController {
             @RequestBody RefreshTokenRequest refreshTokenRequest,
             HttpServletRequest request
     ) {
+        log.debug(LoggingHelper.buildRequestSimpleLogLine(request.getMethod(), request.getRequestURI()));
         return ResponseEntity.ok(authenticationService.refreshToken(refreshTokenRequest.getRefreshToken()));
     }
 

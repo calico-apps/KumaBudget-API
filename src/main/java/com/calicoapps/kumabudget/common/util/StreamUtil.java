@@ -1,4 +1,4 @@
-package com.calicoapps.kumabudget.common;
+package com.calicoapps.kumabudget.common.util;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

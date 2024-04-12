@@ -1,6 +1,6 @@
 package com.calicoapps.kumabudget.security.entity;
 
-import com.calicoapps.kumabudget.common.JsonUtil;
+import com.calicoapps.kumabudget.common.util.JsonUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

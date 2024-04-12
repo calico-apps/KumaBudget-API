@@ -24,7 +24,7 @@ public class PerformanceLoggingInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) {
-        log.info("[PERF] {} {} {}ms" , request.getMethod(), request.getRequestURI(), (System.currentTimeMillis() - (Long) request.getAttribute(ATTRIBUTE_NAME)));
+        log.info("{} {} {} {}ms" , LoggingHelper.PERF_PREFIX, request.getMethod(), request.getRequestURI(), (System.currentTimeMillis() - (Long) request.getAttribute(ATTRIBUTE_NAME)));
     }
 
 }

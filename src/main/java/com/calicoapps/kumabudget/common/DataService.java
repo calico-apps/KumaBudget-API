@@ -29,5 +29,4 @@ public abstract class DataService<T, ID> {
         return getRepository().findAll();
     }
 
-
 }

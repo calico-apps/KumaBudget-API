@@ -4,7 +4,9 @@ import com.calicoapps.kumabudget.common.DataService;
 import com.calicoapps.kumabudget.family.entity.Person;
 import com.calicoapps.kumabudget.family.repository.PersonRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PersonDataService extends DataService<Person, Long> {
 
     public static final String ENTITY_NAME = "Person";

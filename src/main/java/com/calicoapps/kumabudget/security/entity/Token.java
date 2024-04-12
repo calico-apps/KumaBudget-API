@@ -1,6 +1,6 @@
 package com.calicoapps.kumabudget.security.entity;
 
-import com.calicoapps.kumabudget.common.JsonUtil;
+import com.calicoapps.kumabudget.common.util.JsonUtil;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
