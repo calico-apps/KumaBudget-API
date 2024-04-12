@@ -32,40 +32,42 @@ public class Credentials implements UserDetails {
     @JsonIgnore
     private String password;
 
+    @Column(nullable = false)
+    private boolean active;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>();
-//        return role.getAuthorities();
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return email;
+        return this.email;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return this.active;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return this.active;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return this.active;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.active;
     }
 
     @Override

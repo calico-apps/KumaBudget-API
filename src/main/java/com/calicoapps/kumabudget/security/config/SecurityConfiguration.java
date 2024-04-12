@@ -49,7 +49,7 @@ public class SecurityConfiguration {
                         req
                                 .requestMatchers(WHITE_LIST_URL).permitAll()
                                 .anyRequest().authenticated())
-//                 .anyRequest().permitAll()) // Temporary permit all
+//                 .anyRequest().permitAll())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

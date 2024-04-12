@@ -7,7 +7,8 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     BAD_REQUEST("400_ERROR_IN_REQUEST" , HttpStatus.BAD_REQUEST, "Something in your request is not valid"),
-    UNAUTHORIZED("401_INVALID_TOKEN" , HttpStatus.UNAUTHORIZED, "Token not valid, expired or empty"),
+    UNAUTHORIZED_TOKEN("401_INVALID_TOKEN" , HttpStatus.UNAUTHORIZED, "Token not valid, expired or empty"),
+    UNAUTHORIZED_CREDENTIALS("401_BAD_CREDENTIALS" , HttpStatus.UNAUTHORIZED, "Credentials are incorrect"),
     NOT_FOUND("404_ITEM_NOT_FOUND" , HttpStatus.NOT_FOUND, "Item not found"),
     INTERNAL_DB("500_ERROR_DATABASE" , HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while contacting the database"),
     INTERNAL_JSON("500_ERROR_JSON" , HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while serializing Json (JsonUtil)");

@@ -34,15 +34,15 @@ public class AuthRestController {
         return ResponseEntity.ok(authenticationService.getToken(loginRequest.getEmail(), loginRequest.getPassword()));
     }
 
-    // To move later
-    @PostMapping("/register")
-    public ResponseEntity<TokenResponse> registerNewUser(
-            @RequestBody LoginRequest loginRequest,
-            HttpServletRequest request
-    ) {
-        log.debug(LoggingHelper.buildRequestIdLogLine(request.getMethod(), request.getRequestURI(), loginRequest.getEmail()));
-        return ResponseEntity.ok(authenticationService.generateTokenForNewRegisteredUser(loginRequest));
-    }
+//    // To move later
+//    @PostMapping("/register")
+//    public ResponseEntity<TokenResponse> registerNewUser(
+//            @RequestBody LoginRequest loginRequest,
+//            HttpServletRequest request
+//    ) {
+//        log.debug(LoggingHelper.buildRequestIdLogLine(request.getMethod(), request.getRequestURI(), loginRequest.getEmail()));
+//        return ResponseEntity.ok(authenticationService.generateTokenForNewRegisteredUser(loginRequest));
+//    }
 
     // Get a fresh new token without logging in again
     @PostMapping("/token/refresh")

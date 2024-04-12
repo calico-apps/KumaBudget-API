@@ -21,19 +21,13 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Token {
 
-//    @Id
-//    @GeneratedValue
-//    public Long id;
-
-    @Id
-    public String token;
-
-    public boolean revoked;
-
-    public boolean expired;
-
     @ManyToOne(fetch = FetchType.LAZY)
     public Credentials credentials;
+    @Id
+    private String token;
+    private boolean revoked;
+    private boolean expired;
+    private boolean refresh;
 
     @Override
     public String toString() {
