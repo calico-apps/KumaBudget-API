@@ -23,7 +23,7 @@ jobs:
         run: mvn jacoco:report
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@vv4.0.1
+        uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: calico-apps/KumaBudget-API
