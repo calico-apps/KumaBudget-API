@@ -32,6 +32,7 @@ public class AuthenticationService {
         String token = tokenService.generateShortToken(credentials, device);
         String refreshToken = tokenService.generateRefreshToken(credentials, device);
 
+        credentialsService.updateLastActivity(credentials);
         // 4. Return tokens
         return new TokenResponse(credentials.getEmail(), token, refreshToken, device.name());
     }
@@ -45,6 +46,7 @@ public class AuthenticationService {
 
             String newToken = tokenService.generateShortToken(credentials, device);
 
+            credentialsService.updateLastActivity(credentials);
             return new TokenResponse(credentials.getEmail(), newToken, refreshToken, device.name());
         } else {
             throw new KumaException(ErrorCode.UNAUTHORIZED_TOKEN);
@@ -56,6 +58,7 @@ public class AuthenticationService {
             String email = tokenService.extractEmailFromToken(token);
             Credentials credentials = credentialsService.findById(email);
             tokenService.revokeAllTokensForDevice(credentials, device);
+            credentialsService.updateLastActivity(credentials);
             return true;
         } else {
             throw new KumaException(ErrorCode.UNAUTHORIZED_TOKEN);
@@ -67,6 +70,7 @@ public class AuthenticationService {
             String email = tokenService.extractEmailFromToken(token);
             Credentials credentials = credentialsService.findById(email);
             tokenService.revokeAllTokens(credentials);
+            credentialsService.updateLastActivity(credentials);
             return true;
         } else {
             throw new KumaException(ErrorCode.UNAUTHORIZED_TOKEN);

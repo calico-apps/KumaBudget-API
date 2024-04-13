@@ -35,7 +35,7 @@ public class Token {
     private boolean refresh;
 
     @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATE_FORMAT)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATE_TIME_FORMAT)
     private LocalDateTime expirationDateTime;
 
     @Enumerated(EnumType.STRING)

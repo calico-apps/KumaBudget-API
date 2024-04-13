@@ -1,5 +1,6 @@
 package com.calicoapps.kumabudget.exception;
 
+import com.calicoapps.kumabudget.common.util.JsonUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +21,16 @@ public class ErrorJson {
         this.errorCode = errorCode.getErrorCode();
         this.errorMessage = errorCode.getErrorMessage();
         this.additionalMessage = additionalMessage;
+    }
+
+    @Override
+    public String toString() {
+        return JsonUtil.toJson(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return this.toString().equals(o.toString());
     }
 
 }

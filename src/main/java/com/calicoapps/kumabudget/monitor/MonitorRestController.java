@@ -1,7 +1,6 @@
 package com.calicoapps.kumabudget.monitor;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,17 +13,17 @@ public class MonitorRestController {
 
     @GetMapping()
     public ResponseEntity<String> helloWorld() {
-        return new ResponseEntity<>("Hello World :)" , HttpStatus.OK);
+        return ResponseEntity.ok("Hello World");
     }
 
     @GetMapping("isAlive")
     public ResponseEntity<String> isAlive() {
-        return new ResponseEntity<>("Yes I'm alive !" , HttpStatus.OK);
+        return ResponseEntity.ok("Yes I'm alive !");
     }
 
     @GetMapping("testSecurity")
-    public ResponseEntity<String> testSecurity() {
-        return new ResponseEntity<>("OK passed" , HttpStatus.OK);
+    public ResponseEntity testSecurity() {
+        return ResponseEntity.ok().build();
     }
 
 }
