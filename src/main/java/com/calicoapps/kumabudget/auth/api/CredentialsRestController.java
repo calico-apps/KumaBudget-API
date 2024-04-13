@@ -7,6 +7,7 @@ import com.calicoapps.kumabudget.common.Constants;
 import com.calicoapps.kumabudget.common.Device;
 import com.calicoapps.kumabudget.common.util.HeadersUtil;
 import com.calicoapps.kumabudget.monitor.LoggingHelper;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ public class CredentialsRestController {
 
     // todo
     @PutMapping("/update/password")
+    @Operation(summary = "Update password validated by providing old and new one")
     public ResponseEntity<String> changePassword(
             @RequestBody ChangePasswordRequest changePasswordRequest,
             HttpServletRequest request
@@ -37,6 +39,7 @@ public class CredentialsRestController {
 
     // todo
     @PutMapping("/update/email")
+    @Operation(summary = "Update email validated by providing password")
     public ResponseEntity<String> changeEmail(
             @RequestBody CredentialsRequest credentialsRequest,
             HttpServletRequest request

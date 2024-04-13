@@ -6,6 +6,7 @@ import com.calicoapps.kumabudget.common.Constants;
 import com.calicoapps.kumabudget.family.entity.Person;
 import com.calicoapps.kumabudget.family.service.PersonDataService;
 import com.calicoapps.kumabudget.monitor.LoggingHelper;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ public class TransactionModelRestController {
     private final PersonDataService personDataService;
 
     @PostMapping()
+    @Operation(summary = "New model (recurrent) of a transaction")
     public TransactionModel createTransactionModel(
             @RequestBody TransactionModel transactionModel,
             HttpServletRequest request) {
@@ -37,6 +39,7 @@ public class TransactionModelRestController {
     }
 
     @PutMapping()
+    @Operation(summary = "Update of the model of transaction")
     public TransactionModel updateTransactionModel(
             @RequestBody TransactionModel transactionModel,
             HttpServletRequest request) {
@@ -45,6 +48,7 @@ public class TransactionModelRestController {
     }
 
     @GetMapping()
+    @Operation(summary = "Get all models of transaction where the given person is participant")
     public List<TransactionModel> getAllTransactionsModelsOfOnePerson(
             @RequestParam long personId,
             HttpServletRequest request) {

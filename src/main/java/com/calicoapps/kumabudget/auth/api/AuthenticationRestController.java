@@ -11,14 +11,18 @@ import com.calicoapps.kumabudget.common.util.HeadersUtil;
 import com.calicoapps.kumabudget.exception.ErrorCode;
 import com.calicoapps.kumabudget.exception.KumaException;
 import com.calicoapps.kumabudget.monitor.LoggingHelper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -31,6 +35,7 @@ public class AuthenticationRestController {
     private final CredentialsService credentialsService;
 
     @PostMapping("/login")
+    @Operation(summary = "Login and get fresh Token and Refresh Token")
     public ResponseEntity<TokenResponse> login(
             @RequestBody CredentialsRequest credentialsRequest,
             HttpServletRequest request
@@ -41,6 +46,7 @@ public class AuthenticationRestController {
     }
 
     @PutMapping("/logout")
+    @Operation(summary = "Invalidates all the tokens for the given device")
     public ResponseEntity<String> logout(
             HttpServletRequest request
     ) {
@@ -51,6 +57,7 @@ public class AuthenticationRestController {
     }
 
     @PutMapping("/logout/all")
+    @Operation(summary = "Invalidates all the tokens")
     public ResponseEntity<String> logoutAll(
             HttpServletRequest request
     ) {
@@ -62,6 +69,7 @@ public class AuthenticationRestController {
 
     //    // To move later
     @PostMapping("/register")
+    @Operation(summary = "Temporary")
     public ResponseEntity registerNewUser(
             @RequestBody CredentialsRequest credentialsRequest,
             HttpServletRequest request

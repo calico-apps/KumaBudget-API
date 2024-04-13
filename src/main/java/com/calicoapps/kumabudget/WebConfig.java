@@ -33,7 +33,12 @@ public class WebConfig implements WebMvcConfigurer {
         registry
                 .addInterceptor(deviceHeaderInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/" , "/isAlive")
+                .excludePathPatterns(
+                        "/" ,
+                        "/hello" ,
+                        "/v3/api-docs/**" ,
+                        "/swagger-ui.html" ,
+                        "/swagger-ui/**")
                 .order(1);
 
         registry
@@ -47,18 +52,11 @@ public class WebConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns(
                         "/" ,
-                        "/isAlive" ,
-                        Constants.API_URL + "auth/**" ,
-                        "/v2/api-docs" ,
-                        "/v3/api-docs" ,
+                        "/hello" ,
                         "/v3/api-docs/**" ,
-                        "/swagger-resources" ,
-                        "/swagger-resources/**" ,
-                        "/configuration/ui" ,
-                        "/configuration/security" ,
+                        "/swagger-ui.html" ,
                         "/swagger-ui/**" ,
-                        "/webjars/**" ,
-                        "/swagger-ui.html"
+                        Constants.API_URL + "auth/**"
                 )
                 .order(3);
 
