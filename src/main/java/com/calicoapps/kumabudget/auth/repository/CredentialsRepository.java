@@ -1,6 +1,6 @@
-package com.calicoapps.kumabudget.security.repository;
+package com.calicoapps.kumabudget.auth.repository;
 
-import com.calicoapps.kumabudget.security.entity.Credentials;
+import com.calicoapps.kumabudget.auth.entity.Credentials;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CredentialsRepository extends JpaRepository<Credentials, String> {

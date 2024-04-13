@@ -1,4 +1,4 @@
-package com.calicoapps.kumabudget.security.dto;
+package com.calicoapps.kumabudget.auth.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -12,12 +12,8 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TokenResponse {
+public class RefreshTokenRequest {
 
-    @JsonProperty("user_email")
-    private String userEmail;
-    @JsonProperty("access_token")
-    private String accessToken;
     @JsonProperty("refresh_token")
     private String refreshToken;
 

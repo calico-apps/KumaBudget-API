@@ -1,4 +1,4 @@
-package com.calicoapps.kumabudget.security.dto;
+package com.calicoapps.kumabudget.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequest {
+public class CredentialsRequest {
 
     private String email;
     private String password;
