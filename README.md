@@ -1,5 +1,7 @@
 ## KumaBudget API
 
+[![codecov](https://codecov.io/gh/calico-apps/KumaBudget-API/graph/badge.svg?token=DB9OYSZP0F)](https://codecov.io/gh/calico-apps/KumaBudget-API)
+
 ### Environment variables needed
 
 ```dotenv
