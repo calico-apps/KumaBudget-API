@@ -8,11 +8,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.util.Arrays;
 
 @Slf4j
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
+@EnableScheduling
 @RequiredArgsConstructor
 public class KumaBudgetApplication implements CommandLineRunner {
 
