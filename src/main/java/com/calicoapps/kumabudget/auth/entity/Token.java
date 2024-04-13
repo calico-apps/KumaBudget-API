@@ -1,22 +1,28 @@
-package com.calicoapps.kumabudget.security.entity;
+package com.calicoapps.kumabudget.auth.entity;
 
+import com.calicoapps.kumabudget.common.Constants;
+import com.calicoapps.kumabudget.common.Device;
 import com.calicoapps.kumabudget.common.util.JsonUtil;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "auth_tokens")
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Token {
@@ -25,9 +31,15 @@ public class Token {
     public Credentials credentials;
     @Id
     private String token;
-    private boolean revoked;
-    private boolean expired;
+
     private boolean refresh;
+
+    @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATE_FORMAT)
+    private LocalDateTime expirationDateTime;
+
+    @Enumerated(EnumType.STRING)
+    private Device device;
 
     @Override
     public String toString() {

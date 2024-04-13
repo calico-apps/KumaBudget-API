@@ -1,6 +1,6 @@
 package com.calicoapps.kumabudget.family.entity;
 
-import com.calicoapps.kumabudget.security.entity.Credentials;
+import com.calicoapps.kumabudget.auth.entity.Credentials;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

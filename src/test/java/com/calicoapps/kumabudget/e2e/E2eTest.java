@@ -1,11 +1,10 @@
 package com.calicoapps.kumabudget.e2e;
 
 import com.calicoapps.kumabudget.common.util.JsonUtil;
-import com.calicoapps.kumabudget.security.dto.LoginRequest;
-import com.calicoapps.kumabudget.security.dto.TokenResponse;
-import com.calicoapps.kumabudget.security.service.user.CredentialsService;
+import com.calicoapps.kumabudget.auth.dto.CredentialsRequest;
+import com.calicoapps.kumabudget.auth.dto.TokenResponse;
+import com.calicoapps.kumabudget.auth.service.CredentialsService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -54,8 +52,8 @@ public class E2eTest {
     //
 //    @Test
     public void testYourEndpoint() throws Exception {
-        LoginRequest loginRequest = new LoginRequest(EMAIL, PASSWORD);
-        String tokenResponseString = mockMvc.perform(post("/api/auth/login").content(loginRequest.toString()))
+        CredentialsRequest credentialsRequest = new CredentialsRequest(EMAIL, PASSWORD);
+        String tokenResponseString = mockMvc.perform(post("/api/auth/login").content(credentialsRequest.toString()))
                 .andExpect(status().isOk())
                         .andReturn().getResponse().getContentAsString();
         TokenResponse tokenResponse = JsonUtil.fromJson(tokenResponseString, TokenResponse.class);
